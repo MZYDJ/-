@@ -66,21 +66,25 @@ class Player extends Enemy {
             case 'down':
                 if(this.y < 415) {
                     this.y += gridh;
+                    $('.moves').text(++moves);
                 }
                 break;
             case 'up':
                 if (this.y > gridh) {
                     this.y -= gridh;
+                    $('.moves').text(++moves);
                 }
                 break;
             case 'left':
                 if (this.x > 0) {
                     this.x -= gridw;
+                    $('.moves').text(++moves);
                 }
                 break;
             case 'right':
                 if (this.x < 404) {
                     this.x += gridw;
+                    $('.moves').text(++moves);
                 }
         }
 
@@ -109,7 +113,7 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-let start = false, t ,second=0;
+let start = false, t ,second=0, moves=0;
 function startTime() {
     // with(!start) {
     //  t = window.setInterval($('.second').text(second++),1000);
