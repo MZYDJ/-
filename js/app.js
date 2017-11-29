@@ -1,17 +1,21 @@
 // 这是我们的玩家要躲避的敌人 
 class Enemy {
-    // 要应用到每个敌人的实例的变量写在这里
-    // 我们已经提供了一个来帮助你实现更多
-
-    // 敌人的图片或者雪碧图，用一个我们提供的工具函数来轻松的加载文件
+    // 敌人的图片，用一个我们提供的工具函数来轻松的加载文件
+    // 初始化敌人位置为随机位置，速度调用速度产生方程产生随机速度
     constructor(sprite = 'images/enemy-bug.png') {
         this.sprite = sprite;
         this.x = (4 - Math.round(Math.random()*8)) * 101;
         this.y = (1 + Math.round(Math.random()*2)) * 83;
-        this.speed = 101 * (Math.random()*3 + 1);
+        this.speed = this.speeds();
+    }
+
+    // 设置1-3范围的速度随机值
+    speeds() {
+        return 101 * (Math.random()*3 + 1);
     }
 
     // 此为游戏必须的函数，用来更新敌人的位置
+    // 当敌人
     // 参数: dt ，表示时间间隙
     update(dt) {
         // 你应该给每一次的移动都乘以 dt 参数，以此来保证游戏在所有的电脑上
@@ -21,7 +25,7 @@ class Enemy {
         } else {
             this.x = -(101 * (Math.random()+1));
             this.y = (1 + Math.round(Math.random()*2)) * 83;
-            this.speed = 101 * (Math.random()*3 + 1);
+            this.speed = this.speeds();
         }
     };
 
@@ -42,7 +46,14 @@ class Player extends Enemy {
     }
 
     update(dt) {
-        // super.update(dt);
+        for (const ememy of allEnemies) {
+            if (ememy.y === this.y) {
+                if (Math.abs(ememy.x-this.x) < 90) {
+                    this.x = 2 * 101;
+                    this.y = 5 * 83;
+                }
+            }
+        }
 
     }
     render() {
@@ -79,7 +90,7 @@ class Player extends Enemy {
 // 把玩家对象放进一个叫 player 的变量里面
 let allEnemies = [];
 const player = new Player();
-for (let i = 5; i >= 0; i--) {
+for (let i = 4; i >= 0; i--) {
     allEnemies[i] = new Enemy();
 }
 
