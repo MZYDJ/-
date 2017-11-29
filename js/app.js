@@ -6,6 +6,8 @@ class Enemy {
     // 敌人的图片或者雪碧图，用一个我们提供的工具函数来轻松的加载文件
     constructor(sprite = 'images/enemy-bug.png') {
         this.sprite = sprite;
+        this.x = Math.round(Math.random()*5) * 101;
+        this.y = (1 + Math.round(Math.random()*2)) * 83;
     }
 
     // 此为游戏必须的函数，用来更新敌人的位置
@@ -26,11 +28,13 @@ class Enemy {
 // 这个类需要一个 update() 函数， render() 函数和一个 handleInput()函数
 class Player extends Enemy {
     constructor(sprite = 'images/char-boy.png') {
-        super(sprite);
+        super(sprite,x,y);
+        this.x = 2 * 101;
+        this.y = 5 * 83;
     }
 
     update(dt) {
-        super.update(dt);
+        // super.update(dt);
 
     }
     render() {
@@ -46,7 +50,9 @@ class Player extends Enemy {
 // 把玩家对象放进一个叫 player 的变量里面
 let allEnemies = [];
 const player = new Player();
-
+for (let i = 20; i >= 0; i--) {
+    allEnemies[i] = new Enemy();
+}
 
 // 这段代码监听游戏玩家的键盘点击事件并且代表将按键的关键数字送到 Play.handleInput()
 // 方法里面。你不需要再更改这段代码了。
