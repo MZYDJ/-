@@ -10,12 +10,12 @@
  * 公开访问，以此使编写app.js的时候更加容易
  */
 
-var Engine = (function(global) {
+let Engine = (function(global) {
     /* 实现定义我们会在这个作用于用到的变量
      * 创建 canvas 元素，拿到对应的 2D 上下文
      * 设置 canvas 元素的高/宽 然后添加到dom中
      */
-    var doc = global.document,
+    let doc = global.document,
         win = global.window,
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
@@ -31,7 +31,7 @@ var Engine = (function(global) {
          * 速度是不一样的，我们需要一个对每个人都一样的常数（而不管他们的电脑有多快）
          * 就问你屌不屌！
          */
-        var now = Date.now(),
+        let now = Date.now(),
             dt = (now - lastTime) / 1000.0;
 
         /* 调用我们的 update / render 函数， 传递事件间隙给 update 函数因为这样
@@ -86,7 +86,7 @@ var Engine = (function(global) {
      */
     function render() {
         /* 这个数组保存着游戏关卡的特有的行对应的图片相对路径。 */
-        var rowImages = [
+        let rowImages = [
                 'images/water-block.png',   // 这一行是河。
                 'images/stone-block.png',   // 第一行石头
                 'images/stone-block.png',   // 第二行石头
