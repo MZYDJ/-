@@ -108,3 +108,11 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+let start = false, t ,second=0;
+function startTime() {
+    // with(!start) {
+    //  t = window.setInterval($('.second').text(second++),1000);
+    // }
+    $('.second').text(second++);
+}

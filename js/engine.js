@@ -55,6 +55,8 @@ let Engine = (function(global) {
     function init() {
         reset();
         lastTime = Date.now();
+        if (!start) {t = window.setInterval(startTime,1000);}
+        start = true;
         main();
     }
 
