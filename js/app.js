@@ -6,9 +6,9 @@ class Enemy {
     // 敌人的图片或者雪碧图，用一个我们提供的工具函数来轻松的加载文件
     constructor(sprite = 'images/enemy-bug.png') {
         this.sprite = sprite;
-        this.x = Math.round(Math.random()*5) * 101;
+        this.x = (4 - Math.round(Math.random()*8)) * 101;
         this.y = (1 + Math.round(Math.random()*2)) * 83;
-        this.speed = 101 * (Math.random()+1);
+        this.speed = 101 * (Math.random()*3 + 1);
     }
 
     // 此为游戏必须的函数，用来更新敌人的位置
@@ -20,6 +20,8 @@ class Enemy {
             this.x += dt * this.speed;
         } else {
             this.x = -(101 * (Math.random()+1));
+            this.y = (1 + Math.round(Math.random()*2)) * 83;
+            this.speed = 101 * (Math.random()*3 + 1);
         }
     };
 
@@ -77,7 +79,7 @@ class Player extends Enemy {
 // 把玩家对象放进一个叫 player 的变量里面
 let allEnemies = [];
 const player = new Player();
-for (let i = 20; i >= 0; i--) {
+for (let i = 5; i >= 0; i--) {
     allEnemies[i] = new Enemy();
 }
 
