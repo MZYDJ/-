@@ -1,17 +1,18 @@
+const gridw = 101, gridh = 83;
 // 这是我们的玩家要躲避的敌人 
 class Enemy {
     // 敌人的图片，用一个我们提供的工具函数来轻松的加载文件
     // 初始化敌人位置为随机位置，速度调用速度产生方程产生随机速度
     constructor(sprite = 'images/enemy-bug.png') {
         this.sprite = sprite;
-        this.x = (4 - Math.round(Math.random()*8)) * 101;
-        this.y = (1 + Math.round(Math.random()*2)) * 83;
+        this.x = (4 - Math.round(Math.random()*8)) * gridw;
+        this.y = (1 + Math.round(Math.random()*2)) * gridh;
         this.speed = this.speeds();
     }
 
     // 设置1-3范围的速度随机值
     speeds() {
-        return 101 * (Math.random()*3 + 1);
+        return gridw * (Math.random()*3 + 1);
     }
 
     // 此为游戏必须的函数，用来更新敌人的位置
@@ -23,15 +24,15 @@ class Enemy {
         if (this.x < 505) {
             this.x += dt * this.speed;
         } else {
-            this.x = -(101 * (Math.random()+1));
-            this.y = (1 + Math.round(Math.random()*2)) * 83;
+            this.x = -(gridw * (Math.random()+1));
+            this.y = (1 + Math.round(Math.random()*2)) * gridh;
             this.speed = this.speeds();
         }
     };
 
     // 此为游戏必须的函数，用来在屏幕上画出敌人，
     render() {
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y-15);
     };
 };
 
@@ -42,16 +43,16 @@ class Enemy {
 class Player extends Enemy {
     constructor(sprite = 'images/char-boy.png') {
         super(sprite);
-        this.x = 2 * 101;
-        this.y = 5 * 83;
+        this.x = 2 * gridw;
+        this.y = 5 * gridh;
     }
 
     update(dt) {
         for (const ememy of allEnemies) {
             if (ememy.y === this.y) {
                 if (Math.abs(ememy.x-this.x) < 90) {
-                    this.x = 2 * 101;
-                    this.y = 5 * 83;
+                    this.x = 2 * gridw;
+                    this.y = 5 * gridh;
                 }
             }
         }
@@ -64,22 +65,22 @@ class Player extends Enemy {
         switch(key){
             case 'down':
                 if(this.y < 415) {
-                    this.y += 83;
+                    this.y += gridh;
                 }
                 break;
             case 'up':
-                if (this.y > 83) {
-                    this.y -= 83;
+                if (this.y > gridh) {
+                    this.y -= gridh;
                 }
                 break;
             case 'left':
                 if (this.x > 0) {
-                    this.x -= 101;
+                    this.x -= gridw;
                 }
                 break;
             case 'right':
                 if (this.x < 404) {
-                    this.x += 101;
+                    this.x += gridw;
                 }
         }
 
