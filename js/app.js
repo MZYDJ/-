@@ -15,7 +15,7 @@ class Enemy {
     }
 
     // 此为游戏必须的函数，用来更新敌人的位置
-    // 当敌人
+    // 当敌人从右边离开屏幕重置随机位置与随机速度
     // 参数: dt ，表示时间间隙
     update(dt) {
         // 你应该给每一次的移动都乘以 dt 参数，以此来保证游戏在所有的电脑上
@@ -36,8 +36,9 @@ class Enemy {
 };
 
 
-// 现在实现你自己的玩家类
-// 这个类需要一个 update() 函数， render() 函数和一个 handleInput()函数
+// 玩家类
+// update() 函数检查玩家是否和敌人发生碰撞， render() 在屏幕上画出玩家
+// handleInput()函数控制玩家位移
 class Player extends Enemy {
     constructor(sprite = 'images/char-boy.png') {
         super(sprite);
