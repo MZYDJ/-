@@ -8,6 +8,7 @@ class Enemy {
         this.sprite = sprite;
         this.x = Math.round(Math.random()*5) * 101;
         this.y = (1 + Math.round(Math.random()*2)) * 83;
+        this.speed = 101 * (Math.random()+1);
     }
 
     // 此为游戏必须的函数，用来更新敌人的位置
@@ -15,6 +16,11 @@ class Enemy {
     update(dt) {
         // 你应该给每一次的移动都乘以 dt 参数，以此来保证游戏在所有的电脑上
         // 都是以同样的速度运行的
+        if (this.x < 505) {
+            this.x += dt * this.speed;
+        } else {
+            this.x = -(101 * (Math.random()+1));
+        }
     };
 
     // 此为游戏必须的函数，用来在屏幕上画出敌人，
@@ -28,7 +34,7 @@ class Enemy {
 // 这个类需要一个 update() 函数， render() 函数和一个 handleInput()函数
 class Player extends Enemy {
     constructor(sprite = 'images/char-boy.png') {
-        super(sprite,x,y);
+        super(sprite);
         this.x = 2 * 101;
         this.y = 5 * 83;
     }
@@ -40,7 +46,28 @@ class Player extends Enemy {
     render() {
         super.render();
     }
-    handleInput() {
+    handleInput(key) {
+        switch(key){
+            case 'down':
+                if(this.y < 415) {
+                    this.y += 83;
+                }
+                break;
+            case 'up':
+                if (this.y > 83) {
+                    this.y -= 83;
+                }
+                break;
+            case 'left':
+                if (this.x > 0) {
+                    this.x -= 101;
+                }
+                break;
+            case 'right':
+                if (this.x < 404) {
+                    this.x += 101;
+                }
+        }
 
     }
 }
