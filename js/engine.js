@@ -79,6 +79,7 @@ let Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+        key.update();
     }
 
     /* 这个函数做了一些游戏的初始渲染，然后调用 renderEntities 函数。记住，这个函数
@@ -124,6 +125,7 @@ let Engine = (function(global) {
         });
 
         player.render();
+        key.render();
     }
 
     /* 这个函数现在没干任何事，但是这会是一个好地方让你来处理游戏重置的逻辑。可能是一个
@@ -137,6 +139,16 @@ let Engine = (function(global) {
         $('.moves').text(MOVES);
         // START = false;
         player.reset();
+        key.reset();
+    }
+
+    function winning() {
+        win.clearInterval(T);
+        START = false;
+        $('.popcontent').children('h1').text('恭喜过关');
+        $('.popcontent').children('h3').text(`总共用时${SECOND}秒，移动${MOVES}步。`);
+        // $($('.stars').children()).appendTo('.popcontent');
+        $('.pop').css('display','inherit');
     }
 
     /* 紧接着我们来加载我们知道的需要来绘制我们游戏关卡的图片。然后把 init 方法设置为回调函数。
@@ -147,7 +159,9 @@ let Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/Key.png',
+        'images/Selector.png'
     ]);
     Resources.onReady(init);
 
@@ -155,5 +169,5 @@ let Engine = (function(global) {
      * 对象。从而开发者就可以在他们的app.js文件里面更容易的使用它。
      */
     global.ctx = ctx;
-    return init;
+    return [init, winning];
 })(this);

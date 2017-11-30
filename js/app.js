@@ -47,11 +47,15 @@ class Player extends Enemy {
         this.y = 5 * GRID_HEIGHT;
     }
 
+    render() {
+        super.render();
+    }
+
     update(dt) {
         for (const ememy of allEnemies) {
             if (ememy.y === this.y) {
                 if (Math.abs(ememy.x-this.x) < 90) {
-                    Engine();
+                    Engine[0]();
                 }
             }
         }
@@ -62,9 +66,7 @@ class Player extends Enemy {
         this.x = 2 * GRID_WIDTH;
         this.y = 5 * GRID_HEIGHT;
     }
-    render() {
-        super.render();
-    }
+
     handleInput(key) {
         switch(key){
             case 'down':
@@ -95,6 +97,55 @@ class Player extends Enemy {
     }
 }
 
+class Props extends Player {
+    constructor(name='key', sprite = 'images/Key.png') {
+        super(sprite);
+        this.name = name;
+        this.location();
+    }
+
+    render() {
+        super.render();
+    }
+
+    location() {
+        if (this.name==='key') {
+            this.x = 4 * GRID_WIDTH;
+            this.y = 1 * GRID_HEIGHT;
+        }
+        if (this.name==='Selector') {
+            this.x = 0 * GRID_WIDTH;
+            this.y = 5 * GRID_HEIGHT;
+        }
+    }
+
+    update(dt) {
+        if (player.y === this.y) {
+            if (player.x === this.x) {
+                this.change();
+            }
+        }
+    }
+
+    reset() {
+        if (this.name === 'Selector') {
+            this.sprite = 'images/Key.png';
+            this.name = 'key'
+            this.location();
+        }
+    }
+
+    change() {
+        if ( this.name === 'key') {
+            this.sprite = 'images/Selector.png';
+            this.name = 'Selector'
+            this.location();
+        } else if (this.name === 'Selector') {
+            Engine[1]();
+        }
+    }
+}
+
 // 现在实例化你的所有对象
 // 把所有敌人的对象都放进一个叫 allEnemies 的数组里面
 // 把玩家对象放进一个叫 player 的变量里面
@@ -103,6 +154,7 @@ const player = new Player();
 for (let i = 4; i >= 0; i--) {
     allEnemies[i] = new Enemy();
 }
+const key = new Props();
 
 // 这段代码监听游戏玩家的键盘点击事件并且代表将按键的关键数字送到 Play.handleInput()
 // 方法里面。你不需要再更改这段代码了。
@@ -125,5 +177,5 @@ function startTime() {
 
 //点击重启按键刷新页面，游戏界面和胜利提示框相同。
 $('.restart').on('click',function() {
-    Engine();
+    location.reload(true);
 })
