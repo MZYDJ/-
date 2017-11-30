@@ -184,7 +184,7 @@ document.addEventListener('keyup', function(e) {
 });
 
 // 监听鼠标输入，并且代表将移动方向的关键数字送到 Play.handleInput()
-$('body').on('click', function(evt) {
+$('body').on('click', 'canvas', function(evt) {
     const x = evt.pageX - $('canvas').offset().left;
     const y = evt.pageY - $('canvas').offset().top - 50;
     if ((player.x+GRID_WIDTH) > x && x > player.x) {
