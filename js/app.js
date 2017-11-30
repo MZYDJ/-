@@ -1,4 +1,5 @@
 const GRID_WIDTH = 101, GRID_HEIGHT = 83;
+let START, T ,SECOND, MOVES;
 // 这是我们的玩家要躲避的敌人 
 class Enemy {
     // 敌人的图片，用一个我们提供的工具函数来轻松的加载文件
@@ -182,13 +183,32 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+// 监听鼠标输入，并且代表将移动方向的关键数字送到 Play.handleInput()
+$('body').on('click', function(evt) {
+    const x = evt.pageX - $('canvas').offset().left;
+    const y = evt.pageY - $('canvas').offset().top - 50;
+    if ((player.x+GRID_WIDTH) > x && x > player.x) {
+        if (player.y > y) {
+            player.handleInput('up');
+        } else if (y > (player.y+GRID_HEIGHT)) {
+            player.handleInput('down');
+        }
+    }
+    if ((player.y+GRID_HEIGHT) > y && y > player.y) {
+        if (player.x >x) {
+            player.handleInput('left');
+        } else if (x > (player.x+GRID_HEIGHT)) {
+            player.handleInput('right');
+        }
+    }; 
+})
+
 //计时器，提供游戏计时；
-let START, T ,SECOND, MOVES;
 function startTime() {
     $('.second').text(++SECOND);
 }
 
 //点击重启按键刷新页面，游戏界面和胜利提示框相同。
-$('.restart').on('click',function() {
+$('.restart').on("click",function() {
     location.reload(true);
 })
