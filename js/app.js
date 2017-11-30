@@ -51,12 +51,16 @@ class Player extends Enemy {
         for (const ememy of allEnemies) {
             if (ememy.y === this.y) {
                 if (Math.abs(ememy.x-this.x) < 90) {
-                    this.x = 2 * GRID_WIDTH;
-                    this.y = 5 * GRID_HEIGHT;
+                    Engine();
                 }
             }
         }
 
+    }
+
+    reset() {
+        this.x = 2 * GRID_WIDTH;
+        this.y = 5 * GRID_HEIGHT;
     }
     render() {
         super.render();
@@ -113,7 +117,13 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-let START = false, T ,SECOND=0, MOVES=0;
+//计时器，提供游戏计时；
+let START, T ,SECOND, MOVES;
 function startTime() {
-    $('.second').text(SECOND++);
+    $('.second').text(++SECOND);
 }
+
+//点击重启按键刷新页面，游戏界面和胜利提示框相同。
+$('.restart').on('click',function() {
+    Engine();
+})
