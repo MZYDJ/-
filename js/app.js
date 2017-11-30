@@ -1,18 +1,18 @@
-const gridw = 101, gridh = 83;
+const GRID_WIDTH = 101, GRID_HEIGHT = 83;
 // 这是我们的玩家要躲避的敌人 
 class Enemy {
     // 敌人的图片，用一个我们提供的工具函数来轻松的加载文件
     // 初始化敌人位置为随机位置，速度调用速度产生方程产生随机速度
     constructor(sprite = 'images/enemy-bug.png') {
         this.sprite = sprite;
-        this.x = (4 - Math.round(Math.random()*8)) * gridw;
-        this.y = (1 + Math.round(Math.random()*2)) * gridh;
+        this.x = (4 - Math.round(Math.random()*8)) * GRID_WIDTH;
+        this.y = (1 + Math.round(Math.random()*2)) * GRID_HEIGHT;
         this.speed = this.speeds();
     }
 
     // 设置1-3范围的速度随机值
     speeds() {
-        return gridw * (Math.random()*3 + 1);
+        return GRID_WIDTH * (Math.random()*3 + 1);
     }
 
     // 此为游戏必须的函数，用来更新敌人的位置
@@ -24,8 +24,8 @@ class Enemy {
         if (this.x < 505) {
             this.x += dt * this.speed;
         } else {
-            this.x = -(gridw * (Math.random()+1));
-            this.y = (1 + Math.round(Math.random()*2)) * gridh;
+            this.x = -(GRID_WIDTH * (Math.random()+1));
+            this.y = (1 + Math.round(Math.random()*2)) * GRID_HEIGHT;
             this.speed = this.speeds();
         }
     };
@@ -43,16 +43,16 @@ class Enemy {
 class Player extends Enemy {
     constructor(sprite = 'images/char-boy.png') {
         super(sprite);
-        this.x = 2 * gridw;
-        this.y = 5 * gridh;
+        this.x = 2 * GRID_WIDTH;
+        this.y = 5 * GRID_HEIGHT;
     }
 
     update(dt) {
         for (const ememy of allEnemies) {
             if (ememy.y === this.y) {
                 if (Math.abs(ememy.x-this.x) < 90) {
-                    this.x = 2 * gridw;
-                    this.y = 5 * gridh;
+                    this.x = 2 * GRID_WIDTH;
+                    this.y = 5 * GRID_HEIGHT;
                 }
             }
         }
@@ -65,26 +65,26 @@ class Player extends Enemy {
         switch(key){
             case 'down':
                 if(this.y < 415) {
-                    this.y += gridh;
-                    $('.moves').text(++moves);
+                    this.y += GRID_HEIGHT;
+                    $('.moves').text(++MOVES);
                 }
                 break;
             case 'up':
-                if (this.y > gridh) {
-                    this.y -= gridh;
-                    $('.moves').text(++moves);
+                if (this.y > GRID_HEIGHT) {
+                    this.y -= GRID_HEIGHT;
+                    $('.moves').text(++MOVES);
                 }
                 break;
             case 'left':
                 if (this.x > 0) {
-                    this.x -= gridw;
-                    $('.moves').text(++moves);
+                    this.x -= GRID_WIDTH;
+                    $('.moves').text(++MOVES);
                 }
                 break;
             case 'right':
                 if (this.x < 404) {
-                    this.x += gridw;
-                    $('.moves').text(++moves);
+                    this.x += GRID_WIDTH;
+                    $('.moves').text(++MOVES);
                 }
         }
 
@@ -113,10 +113,7 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-let start = false, t ,second=0, moves=0;
+let START = false, T ,SECOND=0, MOVES=0;
 function startTime() {
-    // with(!start) {
-    //  t = window.setInterval($('.second').text(second++),1000);
-    // }
-    $('.second').text(second++);
+    $('.second').text(SECOND++);
 }

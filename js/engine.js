@@ -55,8 +55,8 @@ let Engine = (function(global) {
     function init() {
         reset();
         lastTime = Date.now();
-        if (!start) {t = window.setInterval(startTime,1000);}
-        start = true;
+        if (!START) {T = window.setInterval(startTime,1000);}
+        START = true;
         main();
     }
 
@@ -131,6 +131,7 @@ let Engine = (function(global) {
      * 函数调用一次。
      */
     function reset() {
+        console.log('rest')
         // 空操作
     }
 
