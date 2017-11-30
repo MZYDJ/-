@@ -97,6 +97,7 @@ class Player extends Enemy {
     }
 }
 
+// 新增道具类，目前实现钥匙和传送门的变化、可扩展收藏物品等道具
 class Props extends Player {
     constructor(name='key', sprite = 'images/Key.png') {
         super(sprite);
@@ -107,18 +108,20 @@ class Props extends Player {
     render() {
         super.render();
     }
-
+    // 根据道具名称不同确定刷新位置、可添加扩展其他类型道具
     location() {
-        if (this.name==='key') {
-            this.x = 4 * GRID_WIDTH;
-            this.y = 1 * GRID_HEIGHT;
-        }
-        if (this.name==='Selector') {
-            this.x = 0 * GRID_WIDTH;
-            this.y = 5 * GRID_HEIGHT;
+        switch(this.name){
+            case 'key':
+                this.x = 4 * GRID_WIDTH;
+                this.y = 1 * GRID_HEIGHT;
+                break;
+            case 'Selector':
+                this.x = 0 * GRID_WIDTH;
+                this.y = 5 * GRID_HEIGHT;
+                break;
         }
     }
-
+    // 碰撞检测
     update(dt) {
         if (player.y === this.y) {
             if (player.x === this.x) {
@@ -126,29 +129,34 @@ class Props extends Player {
             }
         }
     }
-
+    // 重置
     reset() {
-        if (this.name === 'Selector') {
-            this.sprite = 'images/Key.png';
-            this.name = 'key'
-            this.location();
+        switch(this.name){
+            case 'Selector':
+                this.sprite = 'images/Key.png';
+                this.name = 'key'
+                this.location();
+                break;
         }
     }
-
+    // 碰撞之后进行变换、吃了钥匙之后刷新出传送门，碰到门游戏结束
     change() {
-        if ( this.name === 'key') {
-            this.sprite = 'images/Selector.png';
-            this.name = 'Selector'
-            this.location();
-        } else if (this.name === 'Selector') {
-            Engine[1]();
+        switch(this.name){
+            case 'key':
+                this.sprite = 'images/Selector.png';
+                this.name = 'Selector'
+                this.location();
+                break;
+            case 'Selector':
+                Engine[1]();
+                break;
         }
     }
 }
 
 // 现在实例化你的所有对象
 // 把所有敌人的对象都放进一个叫 allEnemies 的数组里面
-// 把玩家对象放进一个叫 player 的变量里面
+// 把玩家对象放进一个叫 player 的变量里面、钥匙道具放 key
 let allEnemies = [];
 const player = new Player();
 for (let i = 4; i >= 0; i--) {
@@ -158,6 +166,7 @@ const key = new Props();
 
 // 这段代码监听游戏玩家的键盘点击事件并且代表将按键的关键数字送到 Play.handleInput()
 // 方法里面。你不需要再更改这段代码了。
+// 新增wsad作为方向键控制
 document.addEventListener('keyup', function(e) {
     let allowedKeys = {
         37: 'left',

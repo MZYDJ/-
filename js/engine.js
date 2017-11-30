@@ -169,5 +169,6 @@ let Engine = (function(global) {
      * 对象。从而开发者就可以在他们的app.js文件里面更容易的使用它。
      */
     global.ctx = ctx;
+    // 使用闭包将init和winning传递出去，在app.js中对象进行调用
     return [init, winning];
 })(this);
