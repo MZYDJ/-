@@ -22,7 +22,7 @@ class Enemy {
     update(dt) {
         // 你应该给每一次的移动都乘以 dt 参数，以此来保证游戏在所有的电脑上
         // 都是以同样的速度运行的
-        if (this.x < 505) {
+        if (this.x < ctx.canvas.width) {
             this.x += dt * this.speed;
         } else {
             this.x = -(GRID_WIDTH * (Math.random()+1));
@@ -55,7 +55,7 @@ class Player extends Enemy {
     update(dt) {
         for (const ememy of allEnemies) {
             if (ememy.y === this.y) {
-                if (Math.abs(ememy.x-this.x) < 90) {
+                if (Math.abs(ememy.x-this.x) < 75) {
                     Engine[0]();
                 }
             }
